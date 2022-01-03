@@ -12,28 +12,24 @@ import java.util.List;
 
 public class ComportamentosIndividuaisApp implements IProcessingApp {
 
-    private Boid wander,pursuiter;
+    private Boid seeker,pursuiter;
     private PImage backgroundImg;
     private Boid b1, b2;
     private final double[] window = {-10, 10, -10, 10};
     private final float[] viewport = {0, 0, 1, 1};
     private SubPlot plt;
     private Body target;
-    private List<Body> allTrackingBodies;
     private int index = 0;
-    private int ix = 0;
-    private float seekForce = 1f;
-    private int point = 0;
 
     @Override
     public void setup(PApplet p) {
         backgroundImg = p.loadImage("TP2/imgs/sky.jpg");
         plt = new SubPlot(window, viewport, p.width, p.height);
 
-        wander = new Boid(new PVector(p.random((float) window[0], (float) window[1]),
+        seeker = new Boid(new PVector(p.random((float) window[0], (float) window[1]),
                 p.random((float) window[2], (float) window[3])),
                 0.5f, 0.5f, p.color(255, 0, 0), p, plt);
-        wander.addBehavior(new Seek(1f));
+        seeker.addBehavior(new Seek(1f));
 
         target = new Body(new PVector(), new PVector(), 0.2f, 0.2f, p.color(0,0,220));
         pursuiter = new Boid(new PVector(p.random((float) window[0], (float) window[1]),
@@ -47,7 +43,7 @@ public class ComportamentosIndividuaisApp implements IProcessingApp {
         allTrackingBodies.add(target);
         allTrackingBodies2.add(pursuiter);
         pursuiter.setEye(new Eye(pursuiter, allTrackingBodies));
-        wander.setEye(new Eye(wander, allTrackingBodies2));
+        seeker.setEye(new Eye(seeker, allTrackingBodies2));
 
         // Instruções
         System.out.println("INSTRUÇÕES");
@@ -63,10 +59,10 @@ public class ComportamentosIndividuaisApp implements IProcessingApp {
     public void draw(PApplet p, float dt) {
         p.image(backgroundImg, 0, 0, 800, 600);
         //p.background(255);
-        wander.applyBehaviors(dt);
+        seeker.applyBehaviors(dt);
         pursuiter.applyBehavior(index, dt);
 
-        wander.display(p, plt);
+        seeker.display(p, plt);
         pursuiter.display(p, plt);
         target.display(p, plt);
     }

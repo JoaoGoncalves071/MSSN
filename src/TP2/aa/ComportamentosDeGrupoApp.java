@@ -12,9 +12,9 @@ import java.util.List;
 public class ComportamentosDeGrupoApp implements IProcessingApp {
 
     private PImage backgroundImg;
-    private Boid boid;
+    private Boid boid, boidEye;
     private Body target;
-    private Flock flock1;
+    private Flock flock;
     private float[] sacWeights = {1f, 1f, 1f};
     private double[] window = {-10, 10, -10, 10};
     private float[] viewport = {0, 0, 1, 1};
@@ -25,9 +25,10 @@ public class ComportamentosDeGrupoApp implements IProcessingApp {
     public void setup(PApplet p) {
         backgroundImg = p.loadImage("TP2/imgs/sea.jpg");
         plt = new SubPlot(window, viewport, p.width, p.height);
-        flock1 = new Flock(200, 0.1f, 0.3f, p.color(0, 200, 50), sacWeights,p, plt);
-        flock1.addBehavior(new Seek(1f));
-        boid = flock1.getBoid(0);
+        flock = new Flock(200, 0.1f, 0.3f, p.color(0, 200, 50), sacWeights,p, plt);
+        flock.addBehavior(new Seek(1f));
+        boid = flock.getBoid(0);
+        boidEye = flock.getBoid(1);
         boid.setShape(p, plt, 0.3f, p.color(255, 0, 0));
         boid.removeBehavior(boid.behaviors.get(3));
         boid.removeBehavior(boid.behaviors.get(2));
@@ -48,11 +49,10 @@ public class ComportamentosDeGrupoApp implements IProcessingApp {
         float[] bb = plt.getBoundingBox();
         p.fill(255, 64);
         p.rect(bb[0], bb[1], bb[2], bb[3]);
-        flock1.applyBehavior(dt);
+        flock.applyBehavior(dt);
         boid.applyBehaviors(dt);
-        flock1.display(p, plt);
-        target.display(p, plt);
-        //boid.getEye().display(p, plt);
+        flock.display(p, plt);
+        boidEye.getEye().display(p, plt);
     }
 
     @Override

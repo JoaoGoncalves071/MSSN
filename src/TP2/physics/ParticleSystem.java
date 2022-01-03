@@ -1,32 +1,35 @@
 package TP2.physics;
 
-import TP2.tools.SubPlot;
+
 import processing.core.PApplet;
 import processing.core.PVector;
+import TP2.tools.SubPlot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParticleSystem extends Body{
+public class ParticleSystem extends CelestialMover{
 
     private List<Particle> particles;
-    private PSControl psc;
+    private int particleColor;
+    private float lifetime;
+    private PVector particleSpeed;
+
 
     protected ParticleSystem(PVector pos, PVector vel, float mass,
-                             float radius, PSControl psc) {
-        super(pos, vel, mass, radius, 0);
-        this.psc = psc;
+                             float radius, int particleColor, float lifetime, PVector particleSpeed) {
+
+        super(pos, vel, mass, radius);
+        this.particleColor = particleColor;
+        this.lifetime = lifetime;
+        this.particleSpeed = particleSpeed;
         this.particles = new ArrayList<Particle>();
     }
 
-    public PSControl getPSControl(){
-        return psc;
-    }
-    
     @Override
     public void move(float dt){
         super.move(dt);
-        addParticles(dt);
+        addParticle();
         for(int i = particles.size() - 1; i >= 0; i--){
             Particle p = particles.get(i);
             p.move(dt);
@@ -36,28 +39,16 @@ public class ParticleSystem extends Body{
         }
     }
 
-    private void addOneParticle() {
-        Particle particle = new Particle(pos, psc.getRndVel(), psc.getRndRadius(), psc.getColor(), psc.getRndLifetime());
+    private void addParticle(){
+        float vx = (float)(particleSpeed.x * (Math.random() - 0.5));
+        float vy = (float)(particleSpeed.y * (Math.random() - 0.5));
+        Particle particle = new Particle(pos, new PVector(vx, vy), radius, particleColor, lifetime);
         particles.add(particle);
     }
 
-    private void addParticles(float dt){
-        float particlesPerFrame = psc.getFlow() * dt;
-        int n = (int) particlesPerFrame;
-        float f = particlesPerFrame - n;
-        for (int i = 0; i < n; i++){
-            addOneParticle();
-        }
-        if(Math.random() < f){
-            addOneParticle();
-        }
-    }
-
-    @Override
     public void display(PApplet p, SubPlot plt){
         for (Particle particle : particles){
             particle.display(p, plt);
         }
     }
-
 }

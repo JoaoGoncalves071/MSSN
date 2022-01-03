@@ -45,6 +45,7 @@ public class BoidApp implements IProcessingApp {
         b.applyBehavior(index, dt);
 
         b.display(p, plt);
+        target.display(p, plt);
     }
 
     @Override
