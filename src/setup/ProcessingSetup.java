@@ -2,7 +2,9 @@ package setup;
 
 import TP1.GameofLife;
 //import dla.DLA;
-import TP2.aa.BoidApp;
+import TP2.aa.*;
+import TP2.fractals.ForestApp;
+import TP2.fractals.LSystemApp;
 import TP2.physics.ControlGUIApp;
 import TP2.physics.FallingBodyApp;
 import TP2.physics.ParticleSystemApp;
@@ -42,13 +44,29 @@ public class ProcessingSetup extends PApplet {
 
 
     public static void main(String[] args) {
-        //app = new GameofLife();
-        //app = new DLA();
-        //app = new ControlGUIApp();
-        //app = new SolarSystemApp();
-        //app = new ParticleSystemApp();
-        //app = new FallingBodyApp();
-        app = new BoidApp();
+        // TP1
+        //app = new GameofLife();        // Jogo da vida
+        //app = new DLA();               // DLA
+
+        // Physics
+        //app = new ControlGUIApp();       // Controlo de corpo segundo posição, velocidade e força
+        //app = new SolarSystemApp();    // Sistema solar
+        //app = new ParticleSystemApp(); // Sistema de partículas
+        //app = new FallingBodyApp();    // Queda livre
+
+        // Agentes autónomos e Vida Artificial
+        //app = new BoidApp();           // Boid individual
+        //app = new FlockTestApp();      // Flock de boids
+        //app = new ReynoldsTestApp();   // Behaviors segundo Reynolds
+
+        // Fractal
+        //app = new LSystemApp();          // Árvore
+        //app = new ForestApp();         // Floresta
+
+        //TP2
+        //app = new ComportamentosIndividuaisApp();
+        //app = new ComportamentosDeGrupoApp();
+
         PApplet.main(ProcessingSetup.class);
     }
 

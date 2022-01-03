@@ -1,6 +1,8 @@
 package TP2.aa;
 
 import TP2.physics.Body;
+import TP2.tools.SubPlot;
+import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.ArrayList;
@@ -56,4 +58,30 @@ public class Eye {
         return inSight(t, me.dna.visionSafeDistance, (float) Math.PI);
     }
 
+    public void display(PApplet p, SubPlot plt) {
+
+        p.pushStyle();
+        p.pushMatrix();
+        float[] pp = plt.getPixelCoord(me.getPos().x, me.getPos().y);
+        p.translate(pp[0], pp[1]);
+        p.rotate(-me.getVel().heading());
+        p.noFill();
+        p.stroke(255, 0, 0);
+        p.strokeWeight(3);
+        float[] dd1 = plt.getDimInPixel(me.dna.visionDistance, me.dna.visionDistance);
+        float[] dd2 = plt.getDimInPixel(me.dna.visionSafeDistance, me.dna.visionSafeDistance);
+        p.rotate(me.dna.visionAngle);
+        p.line(0, 0, dd1[0], 0);
+        p.rotate(-2 * me.dna.visionAngle);
+        p.line(0, 0, dd1[0], 0);
+        p.rotate(me.dna.visionAngle);
+        p.arc(0, 0, 2 * dd1[0], 2 * dd1[0], -me.dna.visionAngle, me.dna.visionAngle);
+        p.stroke(255, 0, 255);
+        p.circle(0, 0, 2 * dd2[0]);
+        p.popMatrix();
+        p.popStyle();
+
+
+
+    }
 }

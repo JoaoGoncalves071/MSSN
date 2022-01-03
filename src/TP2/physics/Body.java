@@ -9,7 +9,6 @@ public class Body extends Mover{
     protected int color;
     protected float radius;
 
-
     public Body(PVector pos, PVector vel, float mass, float radius, int color) {
         super(pos, vel, mass);
         this.color = color;

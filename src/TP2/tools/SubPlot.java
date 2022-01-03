@@ -8,7 +8,6 @@ public class SubPlot {
     private double bx;
     private double my;
     private double by;
-    //b -
     //m -declive
 
     public SubPlot(double[] window, float[] viewport, float fullwidth, float fullheight){
@@ -83,8 +82,16 @@ public class SubPlot {
         return v;
     }
 
-    public float[] getDimInPixel(double[] dxdy){
-        return getDimInPixel(dxdy[0], dxdy[1]);
+    public float[] getVectorCoord(double dx, double dy){
+        float[] v = new float[2];
+        v[0] = (float) (dx * mx);
+        v[1] = (float) (-dy * my);
+
+        return v;
+    }
+
+    public float[] getVectorCoord(double[] dxdy){
+        return getVectorCoord(dxdy[0], dxdy[1]);
     }
 
     public float[] getViewport() {
